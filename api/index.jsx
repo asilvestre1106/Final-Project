@@ -17,8 +17,7 @@ const salt = bcrypt.genSaltSync(10);
 app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
 app.use(express.json());
 app.use(cookieParser());
-
-
+app.use('/uploads', express.static(__dirname + '/uploads'));
 mongoose.connect('mongodb+srv://blog:bXwPqvc35t2wwqG7@cluster0.zg4vgxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
 // gets the input from the form and saves it to the database
@@ -96,7 +95,12 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
 }); 
 
 app.get('/post', async (req, res) => {
-  res.json(await Post.find ());
+  res.json(
+    await Post.find()
+    .populate('author', ['username'])
+    .sort({createdAt: -1})
+    .limit(20)
+  );
 })
 
 app.listen(4000);
