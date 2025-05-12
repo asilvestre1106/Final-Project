@@ -2,11 +2,14 @@ const express = require('express'); //express
 const cors = require('cors'); //cors
 const mongoose = require('mongoose'); //mongoose
 const User = require('./models/User'); //User model
+const Post = require('./models/Post'); //Post model
 const bcrypt = require('bcryptjs'); //password hashing
 const app = express(); //express app
 const jwt = require('jsonwebtoken'); //token generation
 const cookieParser = require('cookie-parser'); //cookie parser
-const uploadMiddleware = require('multer'); //file upload
+const multer = require('multer'); //file upload
+const uploadMiddleware = multer({dest:'uploads/'}) //file upload middleware
+const fs = require('fs'); //file system
 
 const secret = 'aoisduoasifasoidfnaosi';
 const salt = bcrypt.genSaltSync(10);
@@ -70,8 +73,22 @@ app.post('/logout', (req, res) => {
   res.cookie('token', '').json('ok');
 });
 
-app.post('/post', uploadMiddleware.single('file'), (req, res) => {
-  res.json(req.files);
+app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
+  const {originalname, path} = req.file;
+  const parts = originalname.split('.');
+  const ext = parts[parts.length - 1];
+  const newPath = path+'.'+ext;
+  fs.renameSync(path, newPath);
+
+  const {title, summary, content} = req.body;
+  const postDoc = await Post.create({
+    title, 
+    summary,
+    content,
+    covver: newPath,
+  });
+
+  res.json(postDoc);
 }); 
 
 app.listen(4000);
