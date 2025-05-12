@@ -60,12 +60,12 @@ app.post('/login', async (req, res) => {
 
 //checks if the user is logged in
 //if the user is logged in, it sends the user info to the client
-app.get('/profile', (req, res) => {
+app.get('/profile', (req,res) => {
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, (err, info)=>{
-    if(err) throw err;
+  jwt.verify(token, secret, {}, (err,info) => {
+    if (err) throw err;
     res.json(info);
-  })
+  });
 });
 
 //logs the user out by clearing the cookie
@@ -80,15 +80,23 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
   const newPath = path+'.'+ext;
   fs.renameSync(path, newPath);
 
-  const {title, summary, content} = req.body;
-  const postDoc = await Post.create({
-    title, 
-    summary,
-    content,
-    covver: newPath,
-  });
-
-  res.json(postDoc);
+  const {token} = req.cookies;
+  jwt.verify(token, secret, {}, async (err, info)=>{
+    if(err) throw err;
+    const {title, summary, content} = req.body;
+    const postDoc = await Post.create({
+      title, 
+      summary,
+      content,
+      cover: newPath,
+      author: info.id,
+    });
+    res.json(postDoc);
+  })
 }); 
+
+app.get('/post', async (req, res) => {
+  res.json(await Post.find ());
+})
 
 app.listen(4000);
