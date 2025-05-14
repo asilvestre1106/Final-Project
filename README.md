@@ -1,188 +1,164 @@
-# Project Overview
+# Final Project - Blog Web Application
 
-This web application is a blog website that allows users to create an account and blog post with images.
+## Project Overview
 
-**Main Features:**
+This web application is a blog website that allows users to create an account and blog posts with images.
+
+---
+
+## Main Features
+
+- Account creation
+- User authentication
+- Create and edit blog posts with images
+- Rich text editing with React Quill
+- React + Vite frontend
+- Backend API with Node.js and Express
+- Database using MongoDB
+- Mobile friendly design
+
+---
+
+## Technologies Used
+
+### MERN Tech Stack
+
+- **MongoDB**: NoSQL database for users, posts, and other information.
+- **Express.js**: Backend framework for routes, APIs, and middleware.
+- **React.js**: Frontend library for building the user interface.
+- **Node.js**: JavaScript runtime for running Express.js.
+
+### Other Technologies
+
+- **CORS**: Enables communication between React frontend and Express backend.
+- **Mongoose**: Connects and interacts with MongoDB using models.
+- **JSON Web Tokens**: Handles user authentication by assigning tokens.
+- **React Router DOM**: Handles navigation and routing in React apps.
+- **bcryptjs**: Hashes passwords for secure storage.
+- **cookie-parser**: Parses cookies attached to client requests.
+- **multer**: Handles file uploads.
+- **fs**: Reads and writes files on the server.
+- **date-fns**: Provides customizable date and time formatting for blog posts.
+- **react-quill**: Rich text editor for blog content.
+
+---
+
+## Setup Instructions
+
+### Frontend Setup
 
-* Account creation
-* User Authentication
-* Create and edit blog posts with images
-* React Quill text editor
-* React + Vite Frontend
-* Backend API with Node.js and Express
-* Database using MongoDB
+1. `cd client`
+2. `npm install`
+3. `npm run dev`
 
-**Technologies Used**
+*If the localhost is not working after running `npm run dev`, type `o` and press Enter to open in your web browser.*
 
-Here are the technologies that I used in the application:
+### Backend Setup
 
-**MERN Tech stack:**
+1. `cd api`
+2. `npm install`
+3. `nodemon index.jsx`
 
-```
-MongoDB: A NoSQL database used to store the users, posts, and other information.
-Express.js: Backend framework that handles the routes, APIs, and the middleware
-React.js: A frontend library for building the user interface and interactive components
-Node.js: Javascript runtime that runs Express.js
-```
+---
+
+## Folder Structure
 
-**Other technologies used:**
+Final-Project/
+│
+├── api/
+│   ├── models/
+│   │   ├── Post.js
+│   │   └── User.js
+│   └── index.jsx
+│
+└── client/
+    └── src/
+        ├── pages/
+        │   ├── CreatePost.jsx
+        │   ├── EditPost.jsx
+        │   ├── HomePage.jsx
+        │   ├── LoginPage.jsx
+        │   ├── PostPage.jsx
+        │   └── RegisterPage.jsx
+        ├── App.css
+        ├── App.jsx
+        ├── Editor.jsx
+        ├── Header.jsx
+        ├── Layout.jsx
+        ├── main.jsx
+        ├── Post.jsx
+        └── UserContext.jsx
 
-* CORS: Enables communications between the React Frontend and the Express Backend
-* Mongoose: Connects and interacts to MongoDB using models
-* JSON Web Tokens: Handles user authentication by assigning tokens
-* React Router DOM: Handles user navigation and routing in react apps
-* Bcryptjs: Hashes passwords for storage
-* Cookie parser: Parses cookies attached to client requests
-* Multer: Handles file uploads
-* Fs: Handles the reading and writing of files on the server
-* Date-fns: Provides customizable date and time for blog posts
-* React Quill: A simple text editor
+The project is separated into **client** (frontend) and **api** (backend) folders.
 
-**Setup Instructions**
+---
 
-## Frontend Setup
+## Code Explanation
 
-1. cd client
-2. npm install
-3. npm run dev
+### Backend
 
-*if the localhost is not working, while running “npm run dev”, type “o” and press enter to open in web browser
-
-##Backend Setup: 
-
-1. cd api
-2. npm install
-3. nodemon index.jsx
-
-**Folder Structure**
-
-**Final-Project/**
-
-|--**api/**
-
-**|     |--models/**
-
-**|     |        |--Post.js**
-
-**|     |        |--User.js**
-
-**|     |--index.jsx**
-
-|--**client/**
-
-**|     |--src/**
-
-**|     |     |--pages/**
-
-**|     |     |     |--CreatePost.jsx**
-
-**|     |     |     |--EditPost.jsx**
-
-**|     |     |     |--HomePage.jsx**
-
-**|     |     |     |--LoginPage.jsx**
-
-**|     |     |     |--PostPage.jsx**
-
-**|     |     |     |--RegisterPage.jsx**
-
-**|     |     |--App.css**
-
-**|     |     |--App.jsx**
-
-**|     |     |--Editor.jsx**
-
-**|     |     |--Header.jsx**
-
-**|     |     |--Layout.jsx**
-
-**|     |     |--main.jsx**
-
-**|     |     |--Post.Jsx**
-
-**|     |     |--UserContext.jsx**
-
-This is the main folder structure of my project. It is mainly separated into the **client**and **api**folders. The **client** is the frontend while the **api** is the backend of the project.
-
-**Code Explanation**
-
-**BACKEND**:
-
-**models/**
-
-**Post.js**- Contains the schema for the Post
-
-**User.js**- Contains the schema for the User
-
-### api/Index.js
-
-* app.use(...): Applies middleware to parse JSON, handles CORS, static files, and parse cookies.
-
-* mongoose.connect(...): Connects the server to the MongoDB database
-
-* app.post(‘/register’, …): Registers new user and hashes the password
-
-* app.post('/login', ...): Authenticates user, and returns a token if valid
-
-* app.get('/profile', ...): Returns user info based on the token
-
-* app.post('/logout', ...): Logs out the user by clearing the authentication token.
-
-* uploadMiddleware.single('file'): Accepts a single uploaded file from the client
-
-* app.post('/post', ...): Creates a new blog post.
-
-* app.put('/post', ...): Updates an existing blog post
-
-* app.get('/post', ...): Retrieves the latest 20 blog posts from the database.
-
-* app.get('/post/:id', ...): Retrieves a specific blog post by its ID.
-
-**FRONTEND:**
-
-**src/pages/**
-
-1. CreatePost.jsx
-
-* Allows the logged in user to create a new blog post that consists of a title, summary, cover image, and the main content of the post.
-* Stores form inputs
-* **redirect** acts as a flag to navigate the user to the homepage after successful post creation
-* Uses **FormData**to include text fields + file uploads
-* **files[0]** selects the first file the user uploaded
-* it then sends the form data to the backend
-* **credentials: ‘include’** allows cookies like JWT token to be sent with the request
-* if the server responds with success, the user is redirected to the homepage
-* Each input is sent to the functions above
-* **Editor** is a separate **jsx** file with the text editor
-
-2. EditPost.jsx
-
-* Allows the user to edit the blog post
-* Almost uses the same code as **CreatePost.jsx**with some additions
-* **UseParams()**: retrieves the post id from the URL
-* Used to fetch and update a specific post
-* Automatically loads the content of the blog post
-
-3. HomePage.jsx
-
-* Displays the list of blog posts from the backend on the homepage
-
-**Challenges Faced**
-
-* It was mostly following the tutorial. The person was speaking a little bit fast plus the accent made it somewhat difficult to understand but I managed to understand him.
-* Since the video was made 3 years ago, react-quill was depreciated. This means that I need to either: (1) downgrade my react so it was compatible with react-quill, (2) use react-quill-new which is the fan updated version of react-quill made by the community, or (3) find another alternative to react-quill. I chose option 2 since it was easier to implement and I got to follow the tutorial. There were also typos and missing variables that I missed while following the tutorial but managed to debug it.
-* Since I followed the tutorial, the tutorial did not include a delete post function.
-
-**Future Improvements**
-
-* A mod page for moderators to manage posts.
-* A delete post function
-* Better design as the webpage looks bland
-
-**Screenshots Include**
-
-* Others: Include photos of you and/or you partner while doing your code
-
-[https://youtu.be/xKs2IZZya7c?si=PWKhlMY1v7G-3zff](https://youtu.be/xKs2IZZya7c?si=PWKhlMY1v7G-3zff)
-
-Last progress 1:52:17 - 05/04/25
+- **models/Post.js**: Contains the schema for blog posts.
+- **models/User.js**: Contains the schema for users.
+- **api/index.jsx**:
+  - `app.use(...)`: Applies middleware for JSON parsing, CORS, static files, and cookies.
+  - `mongoose.connect(...)`: Connects to MongoDB.
+  - `app.post('/register', ...)`: Registers new users and hashes passwords.
+  - `app.post('/login', ...)`: Authenticates users and returns a token if valid.
+  - `app.get('/profile', ...)`: Returns user info based on the token.
+  - `app.post('/logout', ...)`: Logs out the user by clearing the authentication token.
+  - `uploadMiddleware.single('file')`: Accepts a single uploaded file from the client.
+  - `app.post('/post', ...)`: Creates a new blog post.
+  - `app.put('/post', ...)`: Updates an existing blog post.
+  - `app.get('/post', ...)`: Retrieves the latest 20 blog posts.
+  - `app.get('/post/:id', ...)`: Retrieves a specific blog post by ID.
+
+### Frontend
+
+#### src/pages/
+
+- **CreatePost.jsx**: Allows logged-in users to create new blog posts with title, summary, cover image, and content. Uses `FormData` for file uploads and redirects to the homepage on success.
+- **EditPost.jsx**: Allows users to edit existing blog posts. Uses `useParams()` to fetch and update a specific post.
+- **HomePage.jsx**: Displays a list of blog posts fetched from the backend.
+- **LoginPage.jsx**: Handles user login, sets user info in `UserContext`, and redirects on success.
+- **RegisterPage.jsx**: Handles user registration, sends credentials to the backend, and provides feedback.
+- **PostPage.jsx**: Displays a full blog post. Shows "Edit this post" button if the user is the author.
+
+#### src/
+
+- **App.jsx**: Handles routing for the application.
+- **Editor.jsx**: Rich text editor component using React Quill.
+- **Header.jsx**: Navigation bar. Uses `UserContext` to check login status and display appropriate links. Handles logout.
+- **Layout.jsx**: Defines the main layout of the website.
+- **main.jsx**: Entry point for rendering the app. Uses `StrictMode`, `createRoot`, and `BrowserRouter`.
+- **Post.jsx**: Main post component used in `HomePage.jsx`.
+- **UserContext.jsx**: React Context for managing user authentication information. Provides `userInfo` and `setUserInfo` to child components.
+
+---
+
+## Challenges Faced
+
+- The tutorial was fast-paced and had a strong accent, making it challenging to follow at times.
+- The video was outdated; `react-quill` was deprecated. I chose to use `react-quill-new` (community-maintained) for compatibility.
+- Debugged typos and missing variables from the tutorial.
+- The tutorial did not include a delete post function.
+
+---
+
+## Future Improvements
+
+- Add a moderator page for managing posts.
+- Implement a delete post function.
+- Improve the design for a more visually appealing interface.
+
+---
+
+## Screenshots
+
+- Homepage
+- Login Page
+- Register Page
+- Post Page
+- Create a Post Page
+- Update a Post Page
+
+**Others:**
