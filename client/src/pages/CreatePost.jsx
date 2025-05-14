@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Editor from "../Editor";
 
-
-
 export default function CreatePost() {
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
@@ -45,7 +43,6 @@ export default function CreatePost() {
                 onChange={ev => setSummary(ev.target.value)} />
 
             <input type="file"
-                // value={files}
                 onChange={ev => setFiles(ev.target.files)} />
             <Editor onChange={setContent} value={content} />
             <button style ={{marginTop:'5px'}}>Create Post</button>

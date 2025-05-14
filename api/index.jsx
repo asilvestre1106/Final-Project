@@ -36,10 +36,8 @@ app.post('/register', async (req, res) => {
 });
 
 //checks if the user is already registered
-//if not, it errors out
 //if the user is registered, it checks if the password is correct 
 //if the password is correct, it generates a token and sends it to the client
-//if the password is incorrect, it errors out
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne ({username})
@@ -72,6 +70,8 @@ app.post('/logout', (req, res) => {
   res.cookie('token', '').json('ok');
 });
 
+
+//file handling from the client
 app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
   const {originalname, path} = req.file;
   const parts = originalname.split('.');
@@ -94,6 +94,7 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
   })
 }); 
 
+//updates the blog
 app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
   let newPath = null;
   if (req.file) {
@@ -126,7 +127,7 @@ app.put('/post',uploadMiddleware.single('file'), async (req,res) => {
 
 });
 
-
+//shows the last20 blogs
 app.get('/post', async (req, res) => {
   res.json(
     await Post.find()
@@ -136,6 +137,7 @@ app.get('/post', async (req, res) => {
   );
 })
 
+//retrieves a specific blog by ID
 app.get('/post/:id', async (req, res) => {
   const {id} = req.params;
   const postDoc = await Post.findById(id)
